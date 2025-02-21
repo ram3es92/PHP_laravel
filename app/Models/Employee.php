@@ -9,4 +9,8 @@ class Employee extends Model
 {
     /** @use HasFactory<\Database\Factories\EmployeeFactory> */
     use HasFactory;
+    protected $table = 'employees';
+    protected $connection = 'mysql';
+    public $timestamps = true;
+    protected $fillable = ['name', 'surname', 'email'];
 }
