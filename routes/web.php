@@ -1,19 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\FormProcessor;
-
 use App\Http\Controllers\EmployeeController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('form');
 });
 
-Route::get('/userform', [FormProcessor::class, 'index']);
+Route::get('get-employee-data', [EmployeeController::class, 'index'])->name('form');
 
-Route::post('/store_form', [FormProcessor::class, 'store']);
+Route::post('/store_form', [EmployeeController::class, 'store']);
 
-Route::get('/hello/{firstname}', [FormProcessor::class, 'hello'])->name('hello');
+Route::put('/employee/{id}', [EmployeeController::class, 'update']);
 
-Route::get('/test_database', EmployeeController::class);
+Route::get('/data', [EmployeeController::class, 'saveApiData']);
