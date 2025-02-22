@@ -1,43 +1,75 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Employee;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class EmployeeController extends Controller
 {
-    protected $employeesData = [
-        [
-            'name' => 'Roma',
-            'surname' => 'Knaz',
-            'email' => 'rom.knaz@example.com',
-        ],
-        [
-            'name' => 'Anna',
-            'surname' => 'Popova',
-            'email' => 'popova.anna@example.com',
-        ],
-    ];
+    public function index(Request $request)
+    {
+        return view('get-employee-data');
+    }
 
-    public function __invoke()
-    { {
-          
-            if (Employee::count() === 0) {
-                
-                foreach ($this->employeesData as $data) {
-                    $employee = new Employee();
-                    $employee->name = $data['name'];
-                    $employee->surname = $data['surname'];
-                    $employee->email = $data['email'];
-                    $employee->save();
-                }
-            }
+    public function store(Request $request)
+    {
+        $id = $request->input('id');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $workData = $request->input('workData');
+        $uri = $request->path();
+        $url = $request->url();
+        echo $id;
+        echo '<br />';
+        echo $name;
+        echo '<br />';
+        echo $email;
+        echo '<br />';
+        echo $workData;
+        echo '<br />';
+        echo $uri;
+        echo '<br />';
+        echo $url;
+    }
 
-           
-            $employees = Employee::all();
+    public function update(Request $request, $id)
+    {
+        $input = $request->all();
+        $name = $input['name'];
+        $email = $input['email'];
+        $workData = $input['workData'];
+        echo $id;
+        echo '<br />';
+        echo $name;
+        echo '<br />';
+        echo $email;
+        echo '<br />';
+        echo $workData;
+    }
 
-            
-            return view('employees', compact('employees'));
-        }
+    public function jsonUpload(Request $request)
+    {
+        $data = $request->input('address');
+        $data2 = serialize($data);
+        var_dump($data2);
+    }
+
+    public function saveApiData(Request $request)
+    {
+        $client = new Client(['verify' => 'C:\php-8.2.22\cacert.pem']);
+        $res = $client->request('GET', 'https://api.aruljohn.com/ip/json', [
+            'form_params' => [
+                'client_id' => 'test_id',
+                'secret' => 'test_secret',
+            ]
+        ]);
+        echo ($res->getStatusCode());
+        echo ('<br />');
+        var_dump($res->getHeader('content-type'));
+        echo ('<br />');
+        $data2 = $res->getBody();
+        echo ($data2);
+        echo ('<br />');
+        return view('textareaj', compact('data2'));
     }
 }
