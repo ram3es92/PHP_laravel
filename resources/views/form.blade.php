@@ -1,31 +1,21 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Форма</title>
-</head>
-<body>
-    <h1>Заполните форму</h1>
-    <form method="POST" action="/store_form">
-        @csrf  <!-- Защита от CSRF-атак -->
-        
-        <label for="name">Имя:</label>
-        <input type="text" id="name" name="name" required>
+<form name="employee-form" id="employee-form" method="POST" action="{{url('/store_form')}}">
+    @csrf
+    <div class="form-group">
+        <label for="id">ID</label>
+        <input type="text" id="id" name="id" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Description</label>
+        <input type="email" id="email" name="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+        <label for="workData">workData</label>
+        <textarea id="workData" name="workData" class="form-control" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 
-        <br>
-
-        <label for="surname">Фамилия:</label>
-        <input type="text" id="surname" name="surname" required>
-
-        <br>
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-
-        <br>
-
-        <button type="submit">Отправить</button>
-    </form>
-</body>
-</html>
