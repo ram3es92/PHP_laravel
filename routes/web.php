@@ -1,21 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmployeeController;
 
 Route::get('/', function () {
-    return view('home' , [
-        'name' => 'John',
-        'age' => 10,
-        'position' => 'Two',
-        'address' => 'Mellow street',
-    ]);
+    return view('form');
 });
 
-Route::get('/contacts', function () {
-    return view('contacts' , [
-        'email' => '',
-        'post_code' => 654000,
-        'phone' => '88-32-17',
-        'address' => 'Mellow street',
-    ]);
-});
+Route::get('get-employee-data', [EmployeeController::class, 'index'])->name('form');
+
+Route::post('/store_form', [EmployeeController::class, 'store']);
+
+Route::put('/employee/{id}', [EmployeeController::class, 'update']);
+
+Route::get('/data', [EmployeeController::class, 'saveApiData']);
